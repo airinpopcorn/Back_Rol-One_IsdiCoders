@@ -1,1 +1,8 @@
-export class CreateGameDto {}
+export class CreateGameDto {
+    title: string;
+    creator: string;
+    description: string;
+    image: string;
+    characters: Array<string>;
+}
+
