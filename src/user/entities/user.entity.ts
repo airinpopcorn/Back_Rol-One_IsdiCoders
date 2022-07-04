@@ -24,7 +24,7 @@ export interface iUser {
     name: string;
     email: string;
     password: string;
+    role: string;
     players: Array<Types.ObjectId>;
     games: Array<Types.ObjectId>;
 }
-
