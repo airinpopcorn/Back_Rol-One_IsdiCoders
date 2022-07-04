@@ -1,5 +1,7 @@
 # PROYECTO FINAL - ROL-ONE
 
+Aplicación de creación de personajes de juegos de Rol.
+
 ## Entidades
 
 USER {
@@ -32,3 +34,4 @@ ability: string,
 violence: string
 }
 }
+
