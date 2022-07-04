@@ -24,10 +24,6 @@
 import { Schema, Types } from 'mongoose';
 export declare const characterSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, any, {}, "type", {
     name?: string;
-    idGame?: {
-        types: typeof Schema.Types.ObjectId;
-        ref: "Game";
-    };
     properties?: {
         experience: StringConstructor;
         sanity: StringConstructor;
@@ -36,6 +32,10 @@ export declare const characterSchema: Schema<any, import("mongoose").Model<any, 
         willingness: StringConstructor;
         ability: StringConstructor;
         violence: StringConstructor;
+    };
+    idGame?: {
+        types: typeof Schema.Types.ObjectId;
+        ref: "Game";
     };
 }>;
 export interface iCharacter {
