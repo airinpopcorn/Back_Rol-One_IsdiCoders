@@ -31,7 +31,7 @@ jobs:
               run: npm ci
 
             - name: ESLint validation
-              run: npx eslint --ignore-path .gitignore .
+              run: npx eslint --ignore-path .gitignore
 
             - name: Check commit message length
               uses: gsactions/commit-message-checker@v1
@@ -41,3 +41,4 @@ jobs:
                   excludeDescription: 'true' # optional: this excludes the description body of a pull request
                   excludeTitle: 'true' # optional: this excludes the title of a pull request
                   checkAllCommitMessages: 'true' # optional: this checks all commits associated with a pull request
+
