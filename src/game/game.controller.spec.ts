@@ -26,18 +26,17 @@ describe('GameController', () => {
         controller = module.get<GameController>(GameController);
         service = module.get<GameService>(GameService);
     });
-
+    //What to put on controller.create test
+    // controller.create({
+    //     title: 'test',
+    //     creator: 'testCreator',
+    //     description: 'testDescription',
+    //     image: 'testImg',
+    //     characters: [],
+    // });
+    // expect(service.create).toHaveBeenCalled();
     describe('When we call controller.create', () => {
-        test.todo('Then service.create should be called', () => {
-            // controller.create({
-            //     title: 'test',
-            //     creator: 'testCreator',
-            //     description: 'testDescription',
-            //     image: 'testImg',
-            //     characters: [],
-            // });
-            // expect(service.create).toHaveBeenCalled();
-        });
+        test.todo('Then service.create should be called');
     });
     describe('When we call controller.findAll', () => {
         test.todo('Then service.findAll should be called');
