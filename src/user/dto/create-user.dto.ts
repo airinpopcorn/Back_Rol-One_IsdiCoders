@@ -3,6 +3,6 @@ export class CreateUserDto {
     email: string;
     password: string;
     role: string;
-    players: Array<string>;
+    characters: Array<string>;
     games: Array<string>;
 }
