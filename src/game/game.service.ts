@@ -1,26 +1,30 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
+import { iGame } from './entities/game.entity';
 
 @Injectable()
 export class GameService {
-  create(createGameDto: CreateGameDto) {
-    return 'This action adds a new game';
-  }
+    constructor(@InjectModel('Game') private readonly Game: Model<iGame>) {}
+    create(createGameDto: CreateGameDto) {
+        return this.Game.create(createGameDto);
+    }
 
-  findAll() {
-    return `This action returns all game`;
-  }
+    findAll() {
+        return this.Game.find();
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} game`;
-  }
+    findOne(id: string) {
+        return this.Game.findById(id);
+    }
 
-  update(id: number, updateGameDto: UpdateGameDto) {
-    return `This action updates a #${id} game`;
-  }
+    update(id: string, updateGameDto: UpdateGameDto) {
+        return this.Game.findByIdAndUpdate(id, updateGameDto, { new: true });
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} game`;
-  }
+    remove(id: string) {
+        return this.Game.findByIdAndDelete(id);
+    }
 }

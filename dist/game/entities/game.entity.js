@@ -7,6 +7,6 @@ exports.gameSchema = new mongoose_1.Schema({
     creator: String,
     description: String,
     image: String,
-    characters: [{ types: mongoose_1.SchemaTypes.ObjectId, ref: 'Character' }],
+    characters: [{ type: mongoose_1.SchemaTypes.ObjectId, ref: 'Character' }],
 });
 //# sourceMappingURL=game.entity.js.map

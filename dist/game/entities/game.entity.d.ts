@@ -24,7 +24,7 @@
 import { Schema, Types } from 'mongoose';
 export declare const gameSchema: Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, any, {}, "type", {
     characters: {
-        types: typeof Schema.Types.ObjectId;
+        type: typeof Schema.Types.ObjectId;
         ref: "Character";
     }[];
     title?: string;

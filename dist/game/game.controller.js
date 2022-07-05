@@ -16,7 +16,6 @@ exports.GameController = void 0;
 const common_1 = require("@nestjs/common");
 const game_service_1 = require("./game.service");
 const create_game_dto_1 = require("./dto/create-game.dto");
-const update_game_dto_1 = require("./dto/update-game.dto");
 let GameController = class GameController {
     constructor(gameService) {
         this.gameService = gameService;
@@ -28,13 +27,7 @@ let GameController = class GameController {
         return this.gameService.findAll();
     }
     findOne(id) {
-        return this.gameService.findOne(+id);
-    }
-    update(id, updateGameDto) {
-        return this.gameService.update(+id, updateGameDto);
-    }
-    remove(id) {
-        return this.gameService.remove(+id);
+        return this.gameService.findOne(id);
     }
 };
 __decorate([
@@ -57,21 +50,6 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], GameController.prototype, "findOne", null);
-__decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_game_dto_1.UpdateGameDto]),
-    __metadata("design:returntype", void 0)
-], GameController.prototype, "update", null);
-__decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], GameController.prototype, "remove", null);
 GameController = __decorate([
     (0, common_1.Controller)('game'),
     __metadata("design:paramtypes", [game_service_1.GameService])

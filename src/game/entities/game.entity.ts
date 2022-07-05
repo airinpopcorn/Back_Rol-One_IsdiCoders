@@ -5,7 +5,7 @@ export const gameSchema = new Schema({
     creator: String,
     description: String,
     image: String,
-    characters: [{ types: SchemaTypes.ObjectId, ref: 'Character' }],
+    characters: [{ type: SchemaTypes.ObjectId, ref: 'Character' }],
 });
 
 export interface iGame {

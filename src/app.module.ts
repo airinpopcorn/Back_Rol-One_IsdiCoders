@@ -19,4 +19,3 @@ import { CharacterModule } from './character/character.module';
     providers: [AppService],
 })
 export class AppModule {}
-
