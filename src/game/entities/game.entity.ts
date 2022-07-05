@@ -14,5 +14,5 @@ export interface iGame {
     creator: string;
     description: string;
     image: string;
-    characters: Array<Types.ObjectId>;
+    characters: Array<string>;
 }
