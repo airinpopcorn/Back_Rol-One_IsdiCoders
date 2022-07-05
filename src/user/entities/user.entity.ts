@@ -15,8 +15,8 @@ export const user = new Schema({
     },
     password: { type: String, minlength: 5 },
     role: String,
-    players: [{ types: SchemaTypes.ObjectId, ref: 'Character' }],
-    games: [{ types: SchemaTypes.ObjectId, ref: 'Game' }],
+    players: [{ type: SchemaTypes.ObjectId, ref: 'Character' }],
+    games: [{ type: SchemaTypes.ObjectId, ref: 'Game' }],
 });
 
 export interface iUser {
