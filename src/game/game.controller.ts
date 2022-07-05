@@ -1,12 +1,4 @@
-import {
-    Controller,
-    Get,
-    Post,
-    Body,
-    Patch,
-    Param,
-    Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { GameService } from './game.service';
 import { CreateGameDto } from './dto/create-game.dto';
 
@@ -15,17 +7,17 @@ export class GameController {
     constructor(private readonly gameService: GameService) {}
 
     @Post()
-    create(@Body() createGameDto: CreateGameDto) {
-        return this.gameService.create(createGameDto);
+    async create(@Body() createGameDto: CreateGameDto) {
+        return await this.gameService.create(createGameDto);
     }
 
     @Get()
-    findAll() {
-        return this.gameService.findAll();
+    async findAll() {
+        return await this.gameService.findAll();
     }
 
     @Get(':id')
-    findOne(@Param('id') id: string) {
-        return this.gameService.findOne(id);
+    async findOne(@Param('id') id: string) {
+        return await this.gameService.findOne(id);
     }
 }
