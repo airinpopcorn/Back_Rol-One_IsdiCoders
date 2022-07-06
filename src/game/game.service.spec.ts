@@ -10,10 +10,12 @@ describe('GameService', () => {
         description: "It's a test",
         image: 'test.jpg',
         characters: [''],
+        save: jest.fn(),
+        populate: jest.fn().mockResolvedValue({}),
     };
     const mockGameModel = {
         create: jest.fn().mockResolvedValue(mockGame),
-        find: jest.fn().mockResolvedValue(mockGame),
+        find: jest.fn().mockReturnValue(mockGame),
         findById: jest.fn().mockResolvedValue(mockGame),
     };
 
@@ -47,12 +49,18 @@ describe('GameService', () => {
     describe('When calling service.find', () => {
         test('Then it should return all games', async () => {
             const result = await service.findAll();
-            expect(result).toEqual(mockGame);
+            expect(result).toEqual({});
         });
     });
     describe('When calling service.findById', () => {
         test('Then it should return the game selected', async () => {
             const result = await service.findOne('');
+            expect(result).toEqual(mockGame);
+        });
+    });
+    describe('When calling service.assNewCharacterToGame', () => {
+        test('Then it should return the game selected with a new character added in its array of characters', async () => {
+            const result = await service.addNewCharacterToGame('', '');
             expect(result).toEqual(mockGame);
         });
     });
