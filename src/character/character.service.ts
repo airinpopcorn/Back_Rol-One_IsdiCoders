@@ -24,12 +24,12 @@ export class CharacterService {
     }
 
     async update(id: string, updateCharacterDto: UpdateCharacterDto) {
-        return this.Character.findByIdAndUpdate(id, updateCharacterDto, {
+        return await this.Character.findByIdAndUpdate(id, updateCharacterDto, {
             new: true,
         });
     }
 
-    remove(id: string) {
-        return this.Character.findByIdAndDelete(id);
+    async remove(id: string) {
+        return await this.Character.findByIdAndDelete(id);
     }
 }
