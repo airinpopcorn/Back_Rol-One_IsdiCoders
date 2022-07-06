@@ -1,4 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { AuthService } from '../auth/auth.service';
+import { BcryptService } from '../auth/bcrypt.service';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 
@@ -14,12 +16,16 @@ describe('UserController', () => {
                     provide: UserService,
                     useValue: {
                         create: jest.fn(),
+                        login: jest.fn(),
+                        loginWithToken: jest.fn(),
                         findAll: jest.fn(),
                         findOne: jest.fn(),
                         update: jest.fn(),
                         remove: jest.fn(),
                     },
                 },
+                AuthService,
+                BcryptService,
             ],
         }).compile();
 
@@ -43,6 +49,33 @@ describe('UserController', () => {
             expect(service.create).toHaveBeenCalled();
         });
     });
+
+    describe('When calling controller.login without token', () => {
+        test('Then service.login should be called', () => {
+            controller.login(
+                {
+                    email: '',
+                    password: '',
+                },
+                undefined
+            );
+            expect(service.login).toHaveBeenCalled();
+        });
+    });
+
+    describe('When calling controller.login with token', () => {
+        test('Then service.loginWithToken should be called', () => {
+            controller.login(
+                {
+                    email: '',
+                    password: '',
+                },
+                'token'
+            );
+            expect(service.loginWithToken).toHaveBeenCalled();
+        });
+    });
+
     describe('When calling controller.findAll', () => {
         test('Then service.findAll should be called', async () => {
             await controller.findAll();
