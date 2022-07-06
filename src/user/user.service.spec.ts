@@ -125,6 +125,7 @@ describe('UserService', () => {
 
     describe('When calling service.loginWithToken with a valid token but user does not exist', () => {
         test('Then it should throw an unauthorized exception', async () => {
+            mockAuth.validateToken.mockReturnValue({});
             mockUserModel.findById.mockResolvedValueOnce(null);
             expect(async () => {
                 await service.loginWithToken('token');
@@ -139,14 +140,13 @@ describe('UserService', () => {
         });
     });
     describe('When calling service.findById', () => {
-        test.todo(
-            'Then it should return the user selected'
-            // , async () => {
-            //     (mockUserModel.findById as jest.Mock).mockResolvedValue(mockUser);
-            //     const result = await service.findOne('');
-            //     expect(result).toEqual(mockUser);
-            // }
-        );
+        test('Then it should return the user selected', async () => {
+            (mockUserModel.findById as jest.Mock).mockResolvedValueOnce(
+                mockUser
+            );
+            const result = await service.findOne('');
+            expect(result).toEqual(mockUser);
+        });
     });
     describe('When calling service.findByIdAndUpdate', () => {
         test('Then it should return the user updated', async () => {
