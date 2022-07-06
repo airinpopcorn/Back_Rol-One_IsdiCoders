@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Param, Patch } from '@nestjs/common';
 import { GameService } from './game.service';
 import { CreateGameDto } from './dto/create-game.dto';
-import { Types } from 'mongoose';
 
 @Controller('game')
 export class GameController {
