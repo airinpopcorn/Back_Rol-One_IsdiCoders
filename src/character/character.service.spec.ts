@@ -79,7 +79,7 @@ describe('CharacterService', () => {
         });
     });
     describe('When calling service.findByIdAndDelete', () => {
-        test('Then it should return an empty object', async () => {
+        test('Then it should return the character deleted', async () => {
             const result = await service.remove('');
             expect(result).toEqual(mockCharacter);
         });
