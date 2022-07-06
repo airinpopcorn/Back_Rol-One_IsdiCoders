@@ -18,6 +18,7 @@ describe('GameController', () => {
                         findOne: jest.fn(),
                         update: jest.fn(),
                         remove: jest.fn(),
+                        addNewCharacterToGame: jest.fn(),
                     },
                 },
             ],
@@ -49,6 +50,12 @@ describe('GameController', () => {
         test('Then service.findOne should be called', async () => {
             await controller.findOne('');
             expect(service.findOne).toHaveBeenCalled();
+        });
+    });
+    describe('When calling controller.update in /addCharacter/:id route', () => {
+        test('Then service.addNewCharacterToGame should be called', async () => {
+            await controller.update('', { idCharacter: '' });
+            expect(service.addNewCharacterToGame).toHaveBeenCalled();
         });
     });
 });

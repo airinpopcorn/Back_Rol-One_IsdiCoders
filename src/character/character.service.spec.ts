@@ -1,18 +1,87 @@
+import { getModelToken, MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CharacterService } from './character.service';
+import { characterSchema } from './entities/character.entity';
 
 describe('CharacterService', () => {
-  let service: CharacterService;
+    const mockCharacter = {
+        idGame: '',
+        player: '',
+        name: 'test',
+        life: '15',
+        strength: '4',
+        constitution: '6',
+        intelligence: '2',
+    };
+    const mockCharacterModel = {
+        create: jest.fn().mockResolvedValue(mockCharacter),
+        find: jest.fn().mockResolvedValue(mockCharacter),
+        findById: jest.fn().mockResolvedValue(mockCharacter),
+        findByIdAndUpdate: jest
+            .fn()
+            .mockResolvedValue({ ...mockCharacter, name: 'update' }),
+        findByIdAndDelete: jest.fn().mockResolvedValue(mockCharacter),
+    };
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [CharacterService],
-    }).compile();
+    let service: CharacterService;
 
-    service = module.get<CharacterService>(CharacterService);
-  });
+    beforeEach(async () => {
+        const module: TestingModule = await Test.createTestingModule({
+            imports: [
+                MongooseModule.forFeature([
+                    { name: 'Character', schema: characterSchema },
+                ]),
+            ],
+            providers: [CharacterService],
+        })
+            .overrideProvider(getModelToken('Character'))
+            .useValue(mockCharacterModel)
+            .compile();
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
+        service = module.get<CharacterService>(CharacterService);
+    });
+
+    it('should be defined', () => {
+        expect(service).toBeDefined();
+    });
+
+    describe('When calling service.create', () => {
+        test('Then it should return the saved character', async () => {
+            const result = await service.create(mockCharacter);
+            expect(result).toEqual(mockCharacter);
+        });
+    });
+    describe('When calling service.find', () => {
+        test('Then it should return all characters', async () => {
+            const result = await service.findAll();
+            expect(result).toEqual(mockCharacter);
+        });
+    });
+    describe('When calling service.findById', () => {
+        test('Then it should return the character selected', async () => {
+            const result = await service.findOne('');
+            expect(result).toEqual(mockCharacter);
+        });
+    });
+    describe('When calling service.findByIdAndUpdate', () => {
+        test('Then it should return the character updated', async () => {
+            const mockUpdateCharacter = {
+                idGame: '',
+                player: '',
+                name: 'update',
+                life: '15',
+                strength: '4',
+                constitution: '6',
+                intelligence: '2',
+            };
+            const result = await service.update('', { name: 'update' });
+            expect(result).toEqual(mockUpdateCharacter);
+        });
+    });
+    describe('When calling service.findByIdAndDelete', () => {
+        test('Then it should return the character deleted', async () => {
+            const result = await service.remove('');
+            expect(result).toEqual(mockCharacter);
+        });
+    });
 });

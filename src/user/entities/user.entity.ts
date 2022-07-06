@@ -1,11 +1,11 @@
 import { Schema, SchemaTypes, Types } from 'mongoose';
 
-const isEmail = (email: string) => {
+export const isEmail = (email: string) => {
     const regEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return regEx.test(email);
 };
 
-export const user = new Schema({
+export const userSchema = new Schema({
     name: { type: String, required: true },
     email: {
         type: String,
@@ -14,8 +14,8 @@ export const user = new Schema({
         unique: true,
     },
     password: { type: String, minlength: 5 },
-    role: String,
-    players: [{ type: SchemaTypes.ObjectId, ref: 'Character' }],
+    role: { type: String, enum: ['master', 'jugador'], default: 'master' },
+    characters: [{ type: SchemaTypes.ObjectId, ref: 'Character' }],
     games: [{ type: SchemaTypes.ObjectId, ref: 'Game' }],
 });
 
@@ -25,6 +25,6 @@ export interface iUser {
     email: string;
     password: string;
     role: string;
-    players: Array<Types.ObjectId>;
-    games: Array<Types.ObjectId>;
+    characters: Array<string>;
+    games: Array<string>;
 }

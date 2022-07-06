@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Patch } from '@nestjs/common';
 import { GameService } from './game.service';
 import { CreateGameDto } from './dto/create-game.dto';
 
@@ -19,5 +19,16 @@ export class GameController {
     @Get(':id')
     async findOne(@Param('id') id: string) {
         return await this.gameService.findOne(id);
+    }
+
+    @Patch('/addCharacter/:id')
+    async update(
+        @Param('id') id: string,
+        @Body() body: { idCharacter: string }
+    ) {
+        return await this.gameService.addNewCharacterToGame(
+            id,
+            body.idCharacter
+        );
     }
 }
