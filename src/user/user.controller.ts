@@ -3,6 +3,7 @@ import {
     Get,
     Post,
     Body,
+    Headers,
     Patch,
     Param,
     Delete,
@@ -18,6 +19,17 @@ export class UserController {
     @Post()
     create(@Body() createUserDto: CreateUserDto) {
         return this.userService.create(createUserDto);
+    }
+
+    @Post('login')
+    async login(
+        @Body() loginData: { email: string; password: string },
+        @Headers('Authorization') token: string
+    ) {
+        if (token) {
+            return await this.userService.loginWithToken(token);
+        }
+        return await this.userService.login(loginData);
     }
 
     @Get()
