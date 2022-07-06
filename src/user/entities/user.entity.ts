@@ -1,6 +1,6 @@
 import { Schema, SchemaTypes, Types } from 'mongoose';
 
-const isEmail = (email: string) => {
+export const isEmail = (email: string) => {
     const regEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return regEx.test(email);
 };
