@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { iGame } from '../game/entities/game.entity';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
 import { iCharacter } from './entities/character.entity';
@@ -8,10 +9,14 @@ import { iCharacter } from './entities/character.entity';
 @Injectable()
 export class CharacterService {
     constructor(
-        @InjectModel('Character') private readonly Character: Model<iCharacter>
+        @InjectModel('Character') private readonly Character: Model<iCharacter>,
+        @InjectModel('Game') private readonly Game: Model<iGame>
     ) {}
     async create(createCharacterDto: CreateCharacterDto) {
         const newCharacter = await this.Character.create(createCharacterDto);
+        const foundGame = await this.Game.findById(newCharacter.idGame);
+        foundGame.characters.push(newCharacter.id);
+        foundGame.save();
         return newCharacter;
     }
 
@@ -40,6 +45,14 @@ export class CharacterService {
     }
 
     async remove(id: string) {
-        return await this.Character.findByIdAndDelete(id);
+        const character = await this.Character.findById(id);
+        const game = await this.Game.findById(character.idGame);
+        game.characters = game.characters.filter(
+            (item) => String(item) !== String(character.id)
+        );
+
+        game.save();
+        character.delete();
+        return character;
     }
 }
