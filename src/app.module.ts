@@ -10,6 +10,8 @@ import { CharacterModule } from './character/character.module';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import { AuthService } from './auth/auth.service';
 import { BcryptService } from './auth/bcrypt.service';
+import { UserRequiredMiddleware } from './middlewares/user.required.middleware';
+import { characterSchema } from './character/entities/character.entity';
 
 @Module({
     imports: [
@@ -18,6 +20,9 @@ import { BcryptService } from './auth/bcrypt.service';
         UserModule,
         GameModule,
         CharacterModule,
+        MongooseModule.forFeature([
+            { name: 'Character', schema: characterSchema },
+        ]),
     ],
     controllers: [AppController],
     providers: [AppService, AuthService, BcryptService],
@@ -25,9 +30,8 @@ import { BcryptService } from './auth/bcrypt.service';
 export class AppModule {
     configure(consumer: MiddlewareConsumer) {
         consumer
-            .apply(AuthMiddleware)
+            .apply(AuthMiddleware, UserRequiredMiddleware)
             .exclude(
-                { path: 'game', method: RequestMethod.ALL },
                 { path: 'game', method: RequestMethod.GET },
                 { path: 'user', method: RequestMethod.POST }
             )

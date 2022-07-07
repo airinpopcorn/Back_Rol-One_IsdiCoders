@@ -36,6 +36,8 @@ export const characterSchema = new Schema({
 
 export interface iCharacter {
     id?: Types.ObjectId;
+    player: Types.ObjectId;
+    idGame: Types.ObjectId;
     name: string;
     life: string;
     strength: string;
