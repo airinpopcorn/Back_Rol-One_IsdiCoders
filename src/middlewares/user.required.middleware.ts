@@ -3,11 +3,11 @@ import {
     NestMiddleware,
     UnauthorizedException,
 } from '@nestjs/common';
+import { JwtPayload } from 'jsonwebtoken';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { iCharacter } from '../character/entities/character.entity';
 import { AuthService } from '../auth/auth.service';
-import { JwtPayload } from 'jsonwebtoken';
 
 @Injectable()
 export class UserRequiredMiddleware implements NestMiddleware {
@@ -21,7 +21,6 @@ export class UserRequiredMiddleware implements NestMiddleware {
         let tokenData: string | JwtPayload;
         try {
             tokenData = this.auth.validateToken(token.substring(7));
-            console.log(tokenData, 'hola');
         } catch (error) {
             throw new UnauthorizedException('Session expired');
         }
@@ -30,6 +29,7 @@ export class UserRequiredMiddleware implements NestMiddleware {
 
         const userId = tokenData.id as string;
         const findCharacter = await this.Character.findById(req.params.id);
+
         if (String(findCharacter.player) === String(userId)) {
             next();
         } else {
