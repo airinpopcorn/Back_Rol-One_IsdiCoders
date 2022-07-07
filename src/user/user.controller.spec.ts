@@ -44,7 +44,6 @@ describe('UserController', () => {
                 password: '12345',
                 role: 'master',
                 characters: [],
-                games: [],
             });
             expect(service.create).toHaveBeenCalled();
         });

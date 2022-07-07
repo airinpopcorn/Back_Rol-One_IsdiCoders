@@ -33,11 +33,12 @@ export class AppModule {
             .apply(AuthMiddleware)
             .exclude(
                 { path: 'game', method: RequestMethod.GET },
+                { path: 'game', method: RequestMethod.POST },
                 { path: 'game/addCharacter/:id', method: RequestMethod.PATCH },
                 { path: 'user', method: RequestMethod.POST },
                 { path: 'character', method: RequestMethod.POST }
             )
             .forRoutes('*');
-        consumer.apply().exclude().forRoutes();
+        // consumer.apply().exclude().forRoutes();
     }
 }
