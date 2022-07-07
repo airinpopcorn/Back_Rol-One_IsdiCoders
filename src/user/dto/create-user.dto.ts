@@ -4,5 +4,4 @@ export class CreateUserDto {
     password: string;
     role: string;
     characters: Array<string>;
-    games: Array<string>;
 }
