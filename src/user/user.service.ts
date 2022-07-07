@@ -21,12 +21,16 @@ export class UserService {
         private readonly bcrypt: BcryptService
     ) {}
     async create(createUserDto: CreateUserDto) {
-        const newUser = await this.User.create({
-            ...createUserDto,
-            password: this.bcrypt.encrypt(createUserDto.password),
-        });
-        const token = this.auth.createToken(newUser.id);
-        return { user: newUser, token };
+        try {
+            const newUser = await this.User.create({
+                ...createUserDto,
+                password: this.bcrypt.encrypt(createUserDto.password),
+            });
+            const token = this.auth.createToken(newUser.id);
+            return { user: newUser, token };
+        } catch (error) {
+            throw new UnauthorizedException('Fail data required');
+        }
     }
 
     async login(loginData: { email: string; password: string }) {
@@ -63,11 +67,11 @@ export class UserService {
     }
 
     async findAll() {
-        return await this.User.find();
+        return await this.User.find().populate('characters');
     }
 
     async findOne(id: string) {
-        return await this.User.findById(id);
+        return await this.User.findById(id).populate('characters');
     }
 
     async update(id: string, updateUserDto: UpdateUserDto) {

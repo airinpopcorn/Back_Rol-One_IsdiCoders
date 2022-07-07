@@ -12,6 +12,9 @@ describe('CharacterService', () => {
         strength: '4',
         constitution: '6',
         intelligence: '2',
+        populate: jest
+            .fn()
+            .mockReturnValue({ populate: jest.fn().mockResolvedValue({}) }),
     };
     const mockCharacterModel = {
         create: jest.fn().mockResolvedValue(mockCharacter),
@@ -53,32 +56,33 @@ describe('CharacterService', () => {
     });
     describe('When calling service.find', () => {
         test('Then it should return all characters', async () => {
+            mockCharacterModel.find.mockReturnValueOnce({
+                populate: jest.fn().mockReturnValue({
+                    populate: jest.fn().mockResolvedValue(mockCharacter),
+                }),
+            });
             const result = await service.findAll();
             expect(result).toEqual(mockCharacter);
         });
     });
-    describe('When calling service.findById', () => {
+    describe('When calling service.findOne', () => {
         test('Then it should return the character selected', async () => {
+            mockCharacterModel.findById.mockReturnValueOnce({
+                populate: jest.fn().mockReturnValue({
+                    populate: jest.fn().mockResolvedValue(mockCharacter),
+                }),
+            });
             const result = await service.findOne('');
             expect(result).toEqual(mockCharacter);
         });
     });
-    describe('When calling service.findByIdAndUpdate', () => {
+    describe('When calling service.update', () => {
         test('Then it should return the character updated', async () => {
-            const mockUpdateCharacter = {
-                idGame: '',
-                player: '',
-                name: 'update',
-                life: '15',
-                strength: '4',
-                constitution: '6',
-                intelligence: '2',
-            };
             const result = await service.update('', { name: 'update' });
-            expect(result).toEqual(mockUpdateCharacter);
+            expect(result).toEqual({ ...mockCharacter, name: 'update' });
         });
     });
-    describe('When calling service.findByIdAndDelete', () => {
+    describe('When calling service.remove', () => {
         test('Then it should return the character deleted', async () => {
             const result = await service.remove('');
             expect(result).toEqual(mockCharacter);

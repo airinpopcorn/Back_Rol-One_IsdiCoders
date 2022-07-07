@@ -16,11 +16,21 @@ export class CharacterService {
     }
 
     async findAll() {
-        return await this.Character.find();
+        return await this.Character.find()
+            .populate('player', {
+                id: 1,
+                name: 1,
+            })
+            .populate('idGame', { characters: 0 });
     }
 
     async findOne(id: string) {
-        return await this.Character.findById(id);
+        return await this.Character.findById(id)
+            .populate('player', {
+                id: 1,
+                name: 1,
+            })
+            .populate('idGame', { characters: 0 });
     }
 
     async update(id: string, updateCharacterDto: UpdateCharacterDto) {
