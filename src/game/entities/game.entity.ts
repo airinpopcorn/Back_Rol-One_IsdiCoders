@@ -6,6 +6,7 @@ export const gameSchema = new Schema({
     description: String,
     image: String,
     characters: [{ type: SchemaTypes.ObjectId, ref: 'Character' }],
+    template: {},
 });
 
 export interface iGame {

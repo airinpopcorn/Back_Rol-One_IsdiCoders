@@ -1,8 +1,8 @@
 import { Schema, SchemaTypes, Types } from 'mongoose';
 
 export const characterSchema = new Schema({
-    idGame: { type: SchemaTypes.ObjectId, ref: 'Game', required: true },
-    player: { type: SchemaTypes.ObjectId, ref: 'User', required: true },
+    idGame: { type: SchemaTypes.ObjectId, ref: 'Game' },
+    player: { type: SchemaTypes.ObjectId, ref: 'User' },
     name: { type: String, required: true },
     life: { type: String, required: true },
     strength: { type: String, required: true },
@@ -36,8 +36,8 @@ export const characterSchema = new Schema({
 
 export interface iCharacter {
     id?: Types.ObjectId;
-    player: Types.ObjectId;
-    idGame: Types.ObjectId;
+    player?: string;
+    idGame?: string;
     name: string;
     life: string;
     strength: string;
