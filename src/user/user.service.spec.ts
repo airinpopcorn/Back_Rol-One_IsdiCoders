@@ -7,12 +7,14 @@ import { UserService } from './user.service';
 
 describe('UserService', () => {
     const mockUser = {
+        id: '',
         name: 'test',
         email: 'test@gmail.com',
         password: '12345',
         role: 'master',
         characters: [''],
         games: [''],
+        populate: jest.fn().mockResolvedValue({}),
     };
 
     const mockUserModel = {
@@ -70,6 +72,15 @@ describe('UserService', () => {
         test('Then it should return the saved character', async () => {
             const result = await service.create(mockUser);
             expect(result).toEqual(mockResponse);
+        });
+    });
+
+    describe('When calling service.create without required inputs', () => {
+        test('Then it should throw an unauthorizedException', async () => {
+            mockUserModel.create.mockResolvedValueOnce(null);
+            expect(async () => {
+                await service.create(mockUser);
+            }).rejects.toThrow();
         });
     });
 
@@ -135,34 +146,29 @@ describe('UserService', () => {
 
     describe('When calling service.find', () => {
         test('Then it should return all users', async () => {
+            mockUserModel.find.mockReturnValueOnce({
+                populate: jest.fn().mockResolvedValue(mockUser),
+            });
             const result = await service.findAll();
             expect(result).toEqual(mockUser);
         });
     });
-    describe('When calling service.findById', () => {
+    describe('When calling service.findOne', () => {
         test('Then it should return the user selected', async () => {
-            (mockUserModel.findById as jest.Mock).mockResolvedValueOnce(
-                mockUser
-            );
+            (mockUserModel.findById as jest.Mock).mockReturnValueOnce({
+                populate: jest.fn().mockResolvedValue(mockUser),
+            });
             const result = await service.findOne('');
             expect(result).toEqual(mockUser);
         });
     });
-    describe('When calling service.findByIdAndUpdate', () => {
+    describe('When calling service.update', () => {
         test('Then it should return the user updated', async () => {
-            const mockUpdateCharacter = {
-                name: 'test',
-                email: 'test@gmail.com',
-                password: '54321',
-                role: 'master',
-                characters: [''],
-                games: [''],
-            };
             const result = await service.update('', { password: '54321' });
-            expect(result).toEqual(mockUpdateCharacter);
+            expect(result).toEqual({ ...mockUser, password: '54321' });
         });
     });
-    describe('When calling service.findByIdAndDelete', () => {
+    describe('When calling service.remove', () => {
         test('Then it should return the user deleted', async () => {
             const result = await service.remove('');
             expect(result).toEqual(mockUser);

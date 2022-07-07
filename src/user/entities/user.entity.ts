@@ -13,7 +13,7 @@ export const userSchema = new Schema({
         validate: [isEmail, 'Invalid email'],
         unique: true,
     },
-    password: { type: String, minlength: 5 },
+    password: { type: String, minlength: 5, required: true },
     role: { type: String, enum: ['master', 'jugador'], default: 'master' },
     characters: [{ type: SchemaTypes.ObjectId, ref: 'Character' }],
     games: [{ type: SchemaTypes.ObjectId, ref: 'Game' }],
