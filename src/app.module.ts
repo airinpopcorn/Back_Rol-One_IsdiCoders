@@ -10,7 +10,7 @@ import { CharacterModule } from './character/character.module';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import { AuthService } from './auth/auth.service';
 import { BcryptService } from './auth/bcrypt.service';
-import { UserRequiredMiddleware } from './middlewares/user.required.middleware';
+
 import { characterSchema } from './character/entities/character.entity';
 
 @Module({
@@ -30,11 +30,14 @@ import { characterSchema } from './character/entities/character.entity';
 export class AppModule {
     configure(consumer: MiddlewareConsumer) {
         consumer
-            .apply(AuthMiddleware, UserRequiredMiddleware)
+            .apply(AuthMiddleware)
             .exclude(
                 { path: 'game', method: RequestMethod.GET },
-                { path: 'user', method: RequestMethod.POST }
+                { path: 'game/addCharacter/:id', method: RequestMethod.PATCH },
+                { path: 'user', method: RequestMethod.POST },
+                { path: 'character', method: RequestMethod.POST }
             )
             .forRoutes('*');
+        consumer.apply().exclude().forRoutes();
     }
 }

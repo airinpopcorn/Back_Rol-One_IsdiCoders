@@ -1,5 +1,6 @@
 import { getModelToken, MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+import { characterSchema } from '../character/entities/character.entity';
 import { gameSchema } from './entities/game.entity';
 import { GameService } from './game.service';
 
@@ -13,10 +14,29 @@ describe('GameService', () => {
         save: jest.fn(),
         populate: jest.fn().mockResolvedValue({}),
     };
+
+    const mockCharacter = {
+        idGame: '',
+        player: '',
+        name: 'test',
+        life: '15',
+        strength: '4',
+        constitution: '6',
+        intelligence: '2',
+        save: jest.fn(),
+        populate: jest
+            .fn()
+            .mockReturnValue({ populate: jest.fn().mockResolvedValue({}) }),
+    };
+
     const mockGameModel = {
         create: jest.fn().mockResolvedValue(mockGame),
         find: jest.fn().mockReturnValue(mockGame),
         findById: jest.fn().mockResolvedValue(mockGame),
+    };
+
+    const mockCharacterModel = {
+        findById: jest.fn().mockResolvedValue(mockCharacter),
     };
 
     let service: GameService;
@@ -26,12 +46,15 @@ describe('GameService', () => {
             imports: [
                 MongooseModule.forFeature([
                     { name: 'Game', schema: gameSchema },
+                    { name: 'Character', schema: characterSchema },
                 ]),
             ],
             providers: [GameService],
         })
             .overrideProvider(getModelToken('Game'))
             .useValue(mockGameModel)
+            .overrideProvider(getModelToken('Character'))
+            .useValue(mockCharacterModel)
             .compile();
 
         service = module.get<GameService>(GameService);

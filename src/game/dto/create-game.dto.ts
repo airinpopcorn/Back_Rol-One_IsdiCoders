@@ -5,4 +5,3 @@ export class CreateGameDto {
     image: string;
     characters: Array<string>;
 }
-
