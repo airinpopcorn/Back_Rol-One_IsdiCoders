@@ -12,11 +12,16 @@ import { AuthService } from './auth/auth.service';
 import { BcryptService } from './auth/bcrypt.service';
 
 import { characterSchema } from './character/entities/character.entity';
+import { UserRequiredMiddleware } from './middlewares/user.required.middleware';
 
 @Module({
     imports: [
         ConfigModule.forRoot(),
-        MongooseModule.forRoot(process.env.URL_MONGO),
+        MongooseModule.forRoot(
+            process.env.NODE_ENV === 'test'
+                ? process.env.URL_MONGO_TEST
+                : process.env.URL_MONGO
+        ),
         UserModule,
         GameModule,
         CharacterModule,
@@ -25,23 +30,25 @@ import { characterSchema } from './character/entities/character.entity';
         ]),
     ],
     controllers: [AppController],
-    providers: [AppService, AuthService, BcryptService],
+    providers: [AppService, AuthService, UserRequiredMiddleware, BcryptService],
 })
 export class AppModule {
     configure(consumer: MiddlewareConsumer) {
         consumer
             .apply(AuthMiddleware)
             .exclude(
-                { path: 'game', method: RequestMethod.GET },
-                { path: 'game/:id', method: RequestMethod.GET },
-                { path: 'game', method: RequestMethod.POST },
-                { path: 'game/addCharacter/:id', method: RequestMethod.PATCH },
+                { path: 'game', method: RequestMethod.ALL },
+                { path: 'game/:id', method: RequestMethod.ALL },
+                // { path: 'game/addCharacter/:id', method: RequestMethod.PATCH },
                 { path: 'user', method: RequestMethod.POST },
-                { path: 'user', method: RequestMethod.GET },
-                { path: 'user/login', method: RequestMethod.POST },
-                { path: 'character', method: RequestMethod.POST }
+                { path: 'user/login', method: RequestMethod.POST }
             )
             .forRoutes('*');
-        // consumer.apply().exclude().forRoutes();
+        consumer
+            .apply(UserRequiredMiddleware)
+            .forRoutes(
+                { path: 'user', method: RequestMethod.PATCH },
+                { path: 'user', method: RequestMethod.DELETE }
+            );
     }
 }
