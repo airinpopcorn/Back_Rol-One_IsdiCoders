@@ -11,7 +11,7 @@ export class GameController {
         return await this.gameService.create(createGameDto);
     }
 
-    @Get()
+    @Get('')
     async findAll() {
         return await this.gameService.findAll();
     }
