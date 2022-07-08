@@ -15,7 +15,6 @@ export class AuthMiddleware implements NestMiddleware {
         let tokenData: string | JwtPayload;
         try {
             tokenData = this.auth.validateToken(token.substring(7));
-            console.log(tokenData, 'hola');
         } catch (error) {
             throw new UnauthorizedException('Session expired');
         }

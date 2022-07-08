@@ -4,4 +4,6 @@ export class CreateCharacterDto {
     strength: string;
     constitution: string;
     intelligence: string;
+    idGame: string;
+    player: string;
 }
