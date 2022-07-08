@@ -16,6 +16,8 @@ describe('UserService', () => {
         role: 'master',
         characters: [''],
         games: [''],
+        save: jest.fn(),
+        delete: jest.fn(),
         populate: jest.fn().mockResolvedValue({}),
     };
 
@@ -28,6 +30,7 @@ describe('UserService', () => {
         constitution: '6',
         intelligence: '2',
         delete: jest.fn(),
+        save: jest.fn(),
         populate: jest
             .fn()
             .mockReturnValue({ populate: jest.fn().mockResolvedValue({}) }),
@@ -54,11 +57,11 @@ describe('UserService', () => {
     };
 
     const mockCharacterModel = {
-        findById: jest.fn().mockResolvedValue(mockCharacter),
+        deleteMany: jest.fn().mockResolvedValue(mockCharacter),
     };
 
     const mockGameModel = {
-        findById: jest.fn().mockResolvedValue(mockGame),
+        find: jest.fn().mockResolvedValue(mockGame),
     };
 
     const mockBcrypt = {
