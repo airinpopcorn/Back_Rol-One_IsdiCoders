@@ -38,6 +38,8 @@ describe('CharacterController', () => {
                 strength: '5',
                 constitution: '6',
                 intelligence: '2',
+                idGame: '',
+                player: '',
             });
             expect(service.create).toHaveBeenCalled();
         });
