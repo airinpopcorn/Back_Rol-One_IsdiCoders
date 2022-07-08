@@ -7,10 +7,8 @@ jobs:
         name: Test passes
         runs-on: ubuntu-latest
         env:
-            MONGO_USER: ${{secrets.MONGO_USER}}
-            PASSWORD: ${{secrets.PASSWORD}}
-            DBNAME: ${{secrets.DBNAME}}
-            TEST_DBNAME: ${{secrets.TEST_DBNAME}}
+            URL_MONGO: ${{secrets.URL_MONGO}}
+            URL_MONGO_TEST: ${{secrets.URL_MONGO_TEST}}
             SECRET: ${{secrets.SECRET}}
         steps:
             - name: Git checkout
@@ -21,3 +19,4 @@ jobs:
 
             - name: Testing
               run: npm run test
+
