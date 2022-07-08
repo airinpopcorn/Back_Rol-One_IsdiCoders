@@ -36,6 +36,7 @@ export class AppModule {
                 { path: 'game', method: RequestMethod.POST },
                 { path: 'game/addCharacter/:id', method: RequestMethod.PATCH },
                 { path: 'user', method: RequestMethod.POST },
+                { path: 'user/login', method: RequestMethod.POST },
                 { path: 'character', method: RequestMethod.POST }
             )
             .forRoutes('*');
