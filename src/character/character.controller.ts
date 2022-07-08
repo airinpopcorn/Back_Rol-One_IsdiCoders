@@ -20,7 +20,7 @@ export class CharacterController {
         return this.characterService.create(createCharacterDto);
     }
 
-    @Get()
+    @Get('')
     findAll() {
         return this.characterService.findAll();
     }

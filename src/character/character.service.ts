@@ -24,6 +24,7 @@ export class CharacterService {
         const foundUser = await this.User.findById(newCharacter.player);
         foundUser.characters.push(newCharacter.id);
         foundUser.save();
+        newCharacter.save();
 
         return newCharacter;
     }

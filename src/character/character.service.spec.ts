@@ -15,6 +15,7 @@ describe('CharacterService', () => {
         constitution: '6',
         intelligence: '2',
         delete: jest.fn(),
+        save: jest.fn(),
         populate: jest
             .fn()
             .mockReturnValue({ populate: jest.fn().mockResolvedValue({}) }),

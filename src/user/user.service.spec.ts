@@ -4,6 +4,8 @@ import { BcryptService } from '../auth/bcrypt.service';
 import { AuthService } from '../auth/auth.service';
 import { userSchema } from './entities/user.entity';
 import { UserService } from './user.service';
+import { characterSchema } from '../character/entities/character.entity';
+import { gameSchema } from '../game/entities/game.entity';
 
 describe('UserService', () => {
     const mockUser = {
@@ -14,7 +16,33 @@ describe('UserService', () => {
         role: 'master',
         characters: [''],
         games: [''],
+        save: jest.fn(),
+        delete: jest.fn(),
         populate: jest.fn().mockResolvedValue({}),
+    };
+
+    const mockCharacter = {
+        idGame: '',
+        player: '',
+        name: 'test',
+        life: '15',
+        strength: '4',
+        constitution: '6',
+        intelligence: '2',
+        delete: jest.fn(),
+        save: jest.fn(),
+        populate: jest
+            .fn()
+            .mockReturnValue({ populate: jest.fn().mockResolvedValue({}) }),
+    };
+
+    const mockGame = {
+        title: 'test',
+        creator: 'testCreator',
+        description: 'description',
+        image: '',
+        characters: [],
+        save: jest.fn(),
     };
 
     const mockUserModel = {
@@ -26,6 +54,14 @@ describe('UserService', () => {
             .fn()
             .mockResolvedValue({ ...mockUser, password: '54321' }),
         findByIdAndDelete: jest.fn().mockResolvedValue(mockUser),
+    };
+
+    const mockCharacterModel = {
+        deleteMany: jest.fn().mockResolvedValue(mockCharacter),
+    };
+
+    const mockGameModel = {
+        find: jest.fn().mockResolvedValue(mockGame),
     };
 
     const mockBcrypt = {
@@ -50,6 +86,8 @@ describe('UserService', () => {
             imports: [
                 MongooseModule.forFeature([
                     { name: 'User', schema: userSchema },
+                    { name: 'Character', schema: characterSchema },
+                    { name: 'Game', schema: gameSchema },
                 ]),
             ],
             providers: [
@@ -60,6 +98,10 @@ describe('UserService', () => {
         })
             .overrideProvider(getModelToken('User'))
             .useValue(mockUserModel)
+            .overrideProvider(getModelToken('Character'))
+            .useValue(mockCharacterModel)
+            .overrideProvider(getModelToken('Game'))
+            .useValue(mockGameModel)
             .compile();
 
         service = module.get<UserService>(UserService);
