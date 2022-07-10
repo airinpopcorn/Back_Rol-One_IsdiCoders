@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from './../app.module';
+import { AppModule } from '../app.module';
 import { CreateGameDto } from '../game/dto/create-game.dto';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { CreateCharacterDto } from '../character/dto/create-character.dto';
@@ -182,8 +182,6 @@ describe('Given the routes /user', () => {
 
         app = moduleFixture.createNestApplication();
         await app.init();
-
-        // User sign up
     });
 
     afterAll(async () => {
