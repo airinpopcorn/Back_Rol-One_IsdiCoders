@@ -8,6 +8,11 @@ export const characterSchema = new Schema({
     strength: { type: String, required: true },
     constitution: { type: String, required: true },
     intelligence: { type: String, required: true },
+    image: {
+        type: String,
+        default:
+            'https://firebasestorage.googleapis.com/v0/b/final-project-90733.appspot.com/o/Edward_de_Aragon.png?alt=media&token=e297b348-f5ee-4a95-b215-411cbe081109',
+    },
     sanity: String,
     willingness: String,
     skill: String,
@@ -38,6 +43,7 @@ export interface iCharacter {
     id?: Types.ObjectId;
     player?: string;
     idGame?: string;
+    image?: string;
     name: string;
     life: string;
     strength: string;

@@ -39,7 +39,6 @@ export class AppModule {
             .exclude(
                 { path: 'game', method: RequestMethod.ALL },
                 { path: 'game/:id', method: RequestMethod.ALL },
-                // { path: 'game/addCharacter/:id', method: RequestMethod.PATCH },
                 { path: 'user', method: RequestMethod.POST },
                 { path: 'user/login', method: RequestMethod.POST }
             )
