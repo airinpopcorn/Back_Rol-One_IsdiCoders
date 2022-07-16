@@ -20,7 +20,7 @@ export class GameService {
     }
 
     async findOne(id: string) {
-        return await this.Game.findById(id);
+        return await this.Game.findById(id).populate('characters');
     }
 
     async addNewCharacterToGame(id: string, idCharacter: string) {
