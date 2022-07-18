@@ -20,14 +20,14 @@ export class CharacterController {
         return this.characterService.create(createCharacterDto);
     }
 
-    @Get('')
-    findAll() {
-        return this.characterService.findAll();
-    }
-
     @Get(':id')
     findOne(@Param('id') id: string) {
         return this.characterService.findOne(id);
+    }
+
+    @Get('')
+    findAll() {
+        return this.characterService.findAll();
     }
 
     @Patch(':id')

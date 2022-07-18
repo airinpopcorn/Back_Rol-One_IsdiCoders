@@ -1,4 +1,5 @@
 import { Schema, SchemaTypes, Types } from 'mongoose';
+import { iUser } from 'src/user/entities/user.entity';
 
 export const characterSchema = new Schema({
     idGame: { type: SchemaTypes.ObjectId, ref: 'Game' },
@@ -19,7 +20,6 @@ export const characterSchema = new Schema({
     violence: String,
     profession: String,
     reputation: String,
-    tools: [String],
     clan: String,
     perception: String,
     dexterity: String,
@@ -28,12 +28,6 @@ export const characterSchema = new Schema({
     shield: String,
     effort: String,
     injury: String,
-    abilities: [
-        {
-            name: String,
-            value: String,
-        },
-    ],
     charisma: String,
     manipulation: String,
     appearence: String,
@@ -41,7 +35,7 @@ export const characterSchema = new Schema({
 
 export interface iCharacter {
     id?: Types.ObjectId;
-    player?: string;
+    player?: iUser;
     idGame?: string;
     image?: string;
     name: string;
@@ -55,7 +49,6 @@ export interface iCharacter {
     violence?: string;
     profession?: string;
     reputation?: string;
-    tools?: Array<string>;
     clan?: string;
     perception?: string;
     dexterity?: string;
@@ -64,13 +57,13 @@ export interface iCharacter {
     shield?: string;
     effort?: string;
     injury?: string;
-    abilities?: [
-        {
-            name: string;
-            value: string;
-        }
-    ];
     charisma?: string;
     manipulation?: string;
     appearence?: string;
 }
+
+characterSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+        delete returnedObject.__v;
+    },
+});

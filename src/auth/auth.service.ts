@@ -10,6 +10,7 @@ export class AuthService {
 
     validateToken(token: string) {
         const secret = process.env.SECRET;
-        return jwt.verify(token, secret);
+        const result = jwt.verify(token, secret);
+        return result;
     }
 }

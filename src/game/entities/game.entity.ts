@@ -17,3 +17,9 @@ export interface iGame {
     image: string;
     characters: Array<string>;
 }
+
+gameSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+        delete returnedObject.__v;
+    },
+});

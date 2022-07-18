@@ -10,9 +10,11 @@ import { AuthService } from '../auth/auth.service';
 export class AuthMiddleware implements NestMiddleware {
     constructor(private readonly auth: AuthService) {}
     use(req: any, res: any, next: () => void) {
-        const token = req.get('Authorization');
+        const token = req.headers.authorization;
+
         if (!token) throw new UnauthorizedException("Token doesn't exist");
         let tokenData: string | JwtPayload;
+
         try {
             tokenData = this.auth.validateToken(token.substring(7));
         } catch (error) {
