@@ -16,7 +16,6 @@ export const userSchema = new Schema({
     password: { type: String, minlength: 5, required: true },
     role: { type: String, enum: ['master', 'jugador'], default: 'master' },
     characters: [{ type: SchemaTypes.ObjectId, ref: 'Character' }],
-    // games: [{ type: SchemaTypes.ObjectId, ref: 'Game' }],
 });
 
 export interface iUser {
@@ -28,3 +27,10 @@ export interface iUser {
     characters: Array<string>;
     games: Array<string>;
 }
+
+userSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+        delete returnedObject.__v;
+        delete returnedObject.password;
+    },
+});

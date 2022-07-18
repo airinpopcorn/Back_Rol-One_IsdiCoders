@@ -16,11 +16,17 @@ export class GameService {
     }
 
     async findAll() {
-        return await this.Game.find().populate('characters');
+        return await this.Game.find().populate({
+            path: 'characters',
+            populate: { path: 'player' },
+        });
     }
 
     async findOne(id: string) {
-        return await this.Game.findById(id).populate('characters');
+        return await this.Game.findById(id).populate({
+            path: 'characters',
+            populate: { path: 'player' },
+        });
     }
 
     async addNewCharacterToGame(id: string, idCharacter: string) {

@@ -41,6 +41,8 @@ export class AppModule {
                 { path: 'game/:id', method: RequestMethod.ALL },
                 { path: 'user', method: RequestMethod.POST },
                 { path: 'user/login', method: RequestMethod.POST }
+                // { path: 'character', method: RequestMethod.GET },
+                // { path: 'character/:id', method: RequestMethod.GET }
             )
             .forRoutes('*');
         consumer
