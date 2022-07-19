@@ -25,7 +25,6 @@ export interface iUser {
     password: string;
     role: string;
     characters: Array<string>;
-    games: Array<string>;
 }
 
 userSchema.set('toJSON', {

@@ -10,6 +10,7 @@ describe('Given AuthMiddleware class', () => {
 
     beforeEach(() => {
         req = {
+            headers: { authorization: 'bearer token' },
             get: jest.fn().mockReturnValue('bearer token'),
         };
         resp = {} as Response;
@@ -18,11 +19,15 @@ describe('Given AuthMiddleware class', () => {
 
     describe('When calling use method with a correct token', () => {
         const mockAuthServiceGood = {
-            validateToken: jest.fn().mockReturnValue({}),
+            validateToken: jest.fn().mockReturnValue('token'),
             createToken: jest.fn(),
         } as AuthService;
         test('Then it should call next function with no errors', () => {
             authMiddleware = new AuthMiddleware(mockAuthServiceGood);
+            (
+                mockAuthServiceGood.validateToken as jest.Mock
+            ).mockReturnValueOnce({});
+
             authMiddleware.use(req as Request, resp, next);
             expect(next).toHaveBeenCalled();
         });
