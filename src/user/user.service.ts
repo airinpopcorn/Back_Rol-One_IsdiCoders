@@ -10,7 +10,6 @@ import { JwtPayload } from 'jsonwebtoken';
 import { iCharacter } from '../character/entities/character.entity';
 import { iGame } from '../game/entities/game.entity';
 
-AuthService;
 @Injectable()
 export class UserService {
     constructor(
