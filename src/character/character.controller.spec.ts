@@ -33,7 +33,7 @@ describe('CharacterController', () => {
     describe('When calling controller.create', () => {
         test('Then service.create should be called', async () => {
             await controller.create({
-                name: 'test',
+                name: 'test1',
                 life: '15',
                 strength: '5',
                 constitution: '6',
