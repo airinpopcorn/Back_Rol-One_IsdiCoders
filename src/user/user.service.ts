@@ -1,8 +1,4 @@
-import {
-    Injectable,
-    NotFoundException,
-    UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -66,7 +62,6 @@ export class UserService {
                 'characters'
             );
 
-            if (!user) throw new NotFoundException('User does not exist');
             const newToken = this.auth.createToken(user.id);
             return {
                 user,

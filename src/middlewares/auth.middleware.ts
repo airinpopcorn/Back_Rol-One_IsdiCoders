@@ -12,7 +12,6 @@ export class AuthMiddleware implements NestMiddleware {
     use(req: any, res: any, next: () => void) {
         const token = req.headers.authorization;
 
-        if (!token) throw new UnauthorizedException("Token doesn't exist");
         let tokenData: string | JwtPayload;
 
         try {
