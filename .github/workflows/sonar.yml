@@ -2,7 +2,7 @@ name: Sonar Scanner
 on:
     push:
         branches:
-            - master
+            - main
 jobs:
     sonarcloud:
         name: SonarCloud
