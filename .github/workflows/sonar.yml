@@ -16,7 +16,7 @@ jobs:
             - name: Testing coverage
               run: npm run test:cov --watchAll=false
               env:
-                  JWT_SECRET: ${{ secrets.JWT_SECRET }}
+                  SECRET: ${{ secrets.SECRET }}
             - name: SonarCloud Scan
               uses: SonarSource/sonarcloud-github-action@master
               env:
