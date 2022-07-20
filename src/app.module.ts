@@ -40,6 +40,7 @@ export class AppModule {
                 { path: 'game', method: RequestMethod.ALL },
                 { path: 'game/:id', method: RequestMethod.ALL },
                 { path: 'user', method: RequestMethod.POST },
+                { path: 'user', method: RequestMethod.GET },
                 { path: 'user/login', method: RequestMethod.POST }
                 // { path: 'character', method: RequestMethod.GET },
                 // { path: 'character/:id', method: RequestMethod.GET }
