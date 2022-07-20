@@ -17,6 +17,7 @@ export const userSchema = new Schema({
     role: { type: String, enum: ['master', 'jugador'], default: 'master' },
     characters: [{ type: SchemaTypes.ObjectId, ref: 'Character' }],
 });
+/* istanbul ignore file */
 
 export interface iUser {
     id?: Types.ObjectId;
