@@ -26,7 +26,9 @@ export class UserService {
                 ...createUserDto,
                 password: this.bcrypt.encrypt(createUserDto.password),
             });
+
             const token = this.auth.createToken(newUser.id);
+
             return { user: newUser, token };
         } catch (error) {
             throw new UnauthorizedException('Fail data required');
@@ -103,8 +105,8 @@ export class UserService {
             });
         });
 
-        findUser.delete();
+        const deleteUser = findUser.delete();
 
-        return findUser;
+        return deleteUser;
     }
 }

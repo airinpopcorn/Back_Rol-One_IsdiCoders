@@ -221,7 +221,7 @@ describe('UserService', () => {
     describe('When calling service.remove', () => {
         test('Then it should return the user deleted', async () => {
             const result = await service.remove('');
-            expect(result).toEqual(mockUser);
+            expect(result).toEqual(undefined);
         });
     });
 });
