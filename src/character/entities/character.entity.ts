@@ -13,9 +13,10 @@ export const characterSchema = new Schema({
     image: {
         type: String,
         default:
-            'https://firebasestorage.googleapis.com/v0/b/final-project-90733.appspot.com/o/Edward_de_Aragon.png?alt=media&token=e297b348-f5ee-4a95-b215-411cbe081109',
+            'https://firebasestorage.googleapis.com/v0/b/final-project-90733.appspot.com/o/edward-removebg-preview.png?alt=media&token=3beea9de-fbc4-4162-8478-5601a27275d8',
     },
     sanity: String,
+    description: String,
     willingness: String,
     skill: String,
     violence: String,
@@ -44,6 +45,7 @@ export interface iCharacter {
     strength: string;
     intelligence: string;
     constitution: string;
+    description?: string;
     sanity?: string;
     willingness?: string;
     skill?: string;
